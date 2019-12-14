@@ -20,7 +20,7 @@ public class Food {
     public void setId(int id) {this.id = id; }
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
-    public int getCategory() { return id; }
+    public int getCategory() { return category; }
     public void setCategory(int category) { this.category = category; }
 
     @Override

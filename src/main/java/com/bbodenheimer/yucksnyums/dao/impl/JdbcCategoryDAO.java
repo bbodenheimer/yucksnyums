@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.sql.DataSource;
 import com.bbodenheimer.yucksnyums.dao.CategoryDAO;
 import com.bbodenheimer.yucksnyums.model.Category;
@@ -34,6 +36,40 @@ public class JdbcCategoryDAO implements CategoryDAO{
 				try {
 					conn.close();
 				} catch (SQLException e) {}
+			}
+		}
+	}
+
+	public List<Category> getAllCategories() {
+		String sql = "SELECT * FROM CATEGORY";
+
+		Connection conn = null;
+
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			List<Category> allCategory = new ArrayList<Category>();
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Category category = new Category(
+					rs.getInt("id"),
+					rs.getString("description")
+				);
+
+				allCategory.add(category);
+			}
+			rs.close();
+			ps.close();
+
+			return allCategory;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+				}
 			}
 		}
 	}

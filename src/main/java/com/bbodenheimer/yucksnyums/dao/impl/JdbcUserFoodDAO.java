@@ -5,25 +5,27 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.sql.DataSource;
-import com.bbodenheimer.yucksnyums.dao.FoodDAO;
-import com.bbodenheimer.yucksnyums.model.Food;
+import com.bbodenheimer.yucksnyums.dao.UserFoodDAO;
+import com.bbodenheimer.yucksnyums.model.UserFood;
 
-public class JdbcFoodDAO implements FoodDAO{
+public class JdbcUserFoodDAO implements UserFoodDAO{
 
     private DataSource dataSource;
 
-    public void setDataSource(DataSource dataSource) { this.dataSource = dataSource; }
+    public void setDataSource(DataSource dataSource) {this.dataSource = dataSource; }
 
-    public void insert(Food food) {
-        String sql = "INSERT INTO FOOD" +
-                     " (description, category) VALUES (?, ?)";
+    public void insert(UserFood userFood) {
+        String sql = "INSERT INTO USERFOOD" +
+                     " (food, user, preference, comment) VALUES (?, ?, ?, ?)";
         Connection conn = null;
 
         try {
             conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, food.getDescription());
-            ps.setInt(2, food.getCategory());
+            ps.setInt(1, userFood.getFood());
+            ps.setInt(2, userFood.getUser());
+            ps.setInt(3, userFood.getPreference());
+            ps.setString(4, userFood.getComment());
             ps.executeUpdate();
             ps.close();
         } catch (SQLException e) {
@@ -37,8 +39,8 @@ public class JdbcFoodDAO implements FoodDAO{
         }
     }
 
-    public Food findFoodById(int id) {
-        String sql = "SELECT * FROM FOOD WHERE ID = ?";
+    public UserFood findUserFoodById(int id) {
+        String sql = "SELECT * FROM USERFOOD WHERE ID = ?";
 
         Connection conn = null;
 
@@ -46,19 +48,21 @@ public class JdbcFoodDAO implements FoodDAO{
             conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
-            Food food = null;
+            UserFood userFood = null;
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                food = new Food (
+                userFood = new UserFood (
                         rs.getInt("id"),
-                        rs.getString("description"),
-                        rs.getInt("category")
+                        rs.getInt("food"),
+                        rs.getInt("user"),
+                        rs.getInt("preference"),
+                        rs.getString("comment")
                 );
             }
             rs.close();
             ps.close();
 
-            return food;
+            return userFood;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
