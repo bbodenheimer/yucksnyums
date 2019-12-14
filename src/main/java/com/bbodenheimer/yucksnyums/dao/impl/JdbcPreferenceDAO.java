@@ -5,25 +5,24 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.sql.DataSource;
-import com.bbodenheimer.yucksnyums.dao.FoodDAO;
-import com.bbodenheimer.yucksnyums.model.Food;
+import com.bbodenheimer.yucksnyums.dao.PreferenceDAO;
+import com.bbodenheimer.yucksnyums.model.Preference;
 
-public class JdbcFoodDAO implements FoodDAO{
+public class JdbcPreferenceDAO implements PreferenceDAO {
 
     private DataSource dataSource;
 
     public void setDataSource(DataSource dataSource) { this.dataSource = dataSource; }
 
-    public void insert(Food food) {
-        String sql = "INSERT INTO FOOD" +
-                     " (description, category) VALUES (?, ?)";
+    public void insert (Preference preference) {
+        String sql = "INSERT INTO PREFERENCE" +
+                     "(description) VALUES (?)";
         Connection conn = null;
 
         try {
             conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, food.getDescription());
-            ps.setInt(2, food.getCategory());
+            ps.setString(1, preference.getDescription());
             ps.executeUpdate();
             ps.close();
         } catch (SQLException e) {
@@ -37,8 +36,8 @@ public class JdbcFoodDAO implements FoodDAO{
         }
     }
 
-    public Food findFoodById(int id) {
-        String sql = "SELECT * FROM FOOD WHERE ID = ?";
+    public Preference findPreferenceById(int id) {
+        String sql = "SELECT * FROM PREFERENCE WHERE ID = ?";
 
         Connection conn = null;
 
@@ -46,19 +45,18 @@ public class JdbcFoodDAO implements FoodDAO{
             conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
-            Food food = null;
+            Preference preference = null;
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                food = new Food (
-                        rs.getInt("id"),
-                        rs.getString("description"),
-                        rs.getInt("category")
+                preference = new Preference(
+                             rs.getInt("id"),
+                             rs.getString("description")
                 );
             }
             rs.close();
             ps.close();
 
-            return food;
+            return preference;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {

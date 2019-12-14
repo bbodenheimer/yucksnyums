@@ -5,25 +5,25 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.sql.DataSource;
-import com.bbodenheimer.yucksnyums.dao.FoodDAO;
-import com.bbodenheimer.yucksnyums.model.Food;
+import com.bbodenheimer.yucksnyums.dao.UserDAO;
+import com.bbodenheimer.yucksnyums.model.User;
 
-public class JdbcFoodDAO implements FoodDAO{
+public class JdbcUserDAO implements UserDAO{
 
     private DataSource dataSource;
 
     public void setDataSource(DataSource dataSource) { this.dataSource = dataSource; }
 
-    public void insert(Food food) {
-        String sql = "INSERT INTO FOOD" +
-                     " (description, category) VALUES (?, ?)";
+    public void insert(User user) {
+        String sql = "INSERT INTO USER" +
+                     " (username, user_comments) VALUES (?, ?)";
         Connection conn = null;
 
         try {
             conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, food.getDescription());
-            ps.setInt(2, food.getCategory());
+            ps.setString(1, user.getUsername());
+            ps.setString(2,user.getUserComments());
             ps.executeUpdate();
             ps.close();
         } catch (SQLException e) {
@@ -37,8 +37,8 @@ public class JdbcFoodDAO implements FoodDAO{
         }
     }
 
-    public Food findFoodById(int id) {
-        String sql = "SELECT * FROM FOOD WHERE ID = ?";
+    public User findUserById(int id) {
+        String sql = "SELECT * FROM USER WHERE ID = ?";
 
         Connection conn = null;
 
@@ -46,19 +46,19 @@ public class JdbcFoodDAO implements FoodDAO{
             conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
-            Food food = null;
+            User user = null;
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                food = new Food (
+                user = new User (
                         rs.getInt("id"),
-                        rs.getString("description"),
-                        rs.getInt("category")
+                        rs.getString("username"),
+                        rs.getString("user_comments")
                 );
             }
             rs.close();
             ps.close();
 
-            return food;
+            return user;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {

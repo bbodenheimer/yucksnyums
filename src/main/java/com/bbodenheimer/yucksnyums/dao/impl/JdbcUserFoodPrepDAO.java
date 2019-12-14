@@ -5,25 +5,25 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.sql.DataSource;
-import com.bbodenheimer.yucksnyums.dao.FoodDAO;
-import com.bbodenheimer.yucksnyums.model.Food;
+import com.bbodenheimer.yucksnyums.dao.UserFoodPrepDAO;
+import com.bbodenheimer.yucksnyums.model.UserFoodPrep;
 
-public class JdbcFoodDAO implements FoodDAO{
+public class JdbcUserFoodPrepDAO implements UserFoodPrepDAO{
 
     private DataSource dataSource;
 
     public void setDataSource(DataSource dataSource) { this.dataSource = dataSource; }
 
-    public void insert(Food food) {
-        String sql = "INSERT INTO FOOD" +
-                     " (description, category) VALUES (?, ?)";
+    public void insert(UserFoodPrep userFoodPrep) {
+        String sql = "INSERT INTO USERFOODPREP" +
+                     " (preparation, map) VALUES (?, ?)";
         Connection conn = null;
 
         try {
             conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, food.getDescription());
-            ps.setInt(2, food.getCategory());
+            ps.setInt(1, userFoodPrep.getPreparation());
+            ps.setInt(2, userFoodPrep.getMap());
             ps.executeUpdate();
             ps.close();
         } catch (SQLException e) {
@@ -37,8 +37,8 @@ public class JdbcFoodDAO implements FoodDAO{
         }
     }
 
-    public Food findFoodById(int id) {
-        String sql = "SELECT * FROM FOOD WHERE ID = ?";
+    public UserFoodPrep findUserFoodPrepById(int id) {
+        String sql = "SELECT * FROM USERFOODPREP WHERE ID = ?";
 
         Connection conn = null;
 
@@ -46,19 +46,19 @@ public class JdbcFoodDAO implements FoodDAO{
             conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
-            Food food = null;
+            UserFoodPrep userFoodPrep = null;
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                food = new Food (
+                userFoodPrep = new UserFoodPrep (
                         rs.getInt("id"),
-                        rs.getString("description"),
-                        rs.getInt("category")
+                        rs.getInt("preparation"),
+                        rs.getInt("map")
                 );
             }
             rs.close();
             ps.close();
 
-            return food;
+            return userFoodPrep;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {

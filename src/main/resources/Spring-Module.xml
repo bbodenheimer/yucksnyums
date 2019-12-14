@@ -13,4 +13,28 @@
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
 
+	<bean id="preferenceDAO" class="com.bbodenheimer.yucksnyums.dao.impl.JdbcPreferenceDAO">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+
+	<bean id="prepDAO" class="com.bbodenheimer.yucksnyums.dao.impl.JdbcPrepDAO">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+
+	<bean id="foodPrepDAO" class="com.bbodenheimer.yucksnyums.dao.impl.JdbcFoodPrepDAO">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+
+	<bean id="userDAO" class="com.bbodenheimer.yucksnyums.dao.impl.JdbcUserDAO">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+
+	<bean id="userFoodDAO" class="com.bbodenheimer.yucksnyums.dao.impl.JdbcUserFoodDAO">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+
+	<bean id="userFoodPrepDAO" class="com.bbodenheimer.yucksnyums.dao.impl.JdbcUserFoodPrepDAO">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+
 </beans>
