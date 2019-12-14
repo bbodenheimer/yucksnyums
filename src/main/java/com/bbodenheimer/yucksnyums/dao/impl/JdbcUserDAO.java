@@ -15,7 +15,7 @@ public class JdbcUserDAO implements UserDAO{
     public void setDataSource(DataSource dataSource) { this.dataSource = dataSource; }
 
     public void insert(User user) {
-        String sql = "INSERT INTO FOOD" +
+        String sql = "INSERT INTO USER" +
                      " (username, user_comments) VALUES (?, ?)";
         Connection conn = null;
 
@@ -23,7 +23,7 @@ public class JdbcUserDAO implements UserDAO{
             conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, user.getUsername());
-            ps.setString(2,user.getUser_comments());
+            ps.setString(2,user.getUserComments());
             ps.executeUpdate();
             ps.close();
         } catch (SQLException e) {

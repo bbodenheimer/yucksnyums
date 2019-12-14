@@ -15,7 +15,7 @@ public class JdbcUserFoodPrepDAO implements UserFoodPrepDAO{
     public void setDataSource(DataSource dataSource) { this.dataSource = dataSource; }
 
     public void insert(UserFoodPrep userFoodPrep) {
-        String sql = "INSERT INTO FOOD" +
+        String sql = "INSERT INTO USERFOODPREP" +
                      " (preparation, map) VALUES (?, ?)";
         Connection conn = null;
 
@@ -70,33 +70,3 @@ public class JdbcUserFoodPrepDAO implements UserFoodPrepDAO{
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
