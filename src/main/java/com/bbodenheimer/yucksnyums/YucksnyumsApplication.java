@@ -7,19 +7,24 @@ import com.bbodenheimer.yucksnyums.model.Food;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
 import java.util.List;
 
+@SpringBootApplication
 public class YucksnyumsApplication {
 
 	public static void main(String[] args) {
-		ApplicationContext context = 
+		SpringApplication.run(YucksnyumsApplication.class, args);
+		ApplicationContext context =
 	    		new ClassPathXmlApplicationContext("Spring-Module.xml");
-		
-		CategoryDAO categoryDAO = (CategoryDAO) context.getBean("categoryDAO");
-		List<Category> allCategories = categoryDAO.getAllCategories();
+		try {
+			CategoryDAO categoryDAO = (CategoryDAO) context.getBean("categoryDAO");
+			List<Category> allCategories = categoryDAO.getAllCategories();
 
-//		Category category = new Category("Test");
-//		categoryDAO.insert(category);
+			Category category = new Category("test");
+			categoryDAO.insert(category);
 
 //		Category categoryFind = categoryDAO.findCategoryById(2);
 //		System.out.println(categoryFind);
@@ -31,7 +36,10 @@ public class YucksnyumsApplication {
 //		Food foodFind = foodDAO.findFoodById(1);
 //		System.out.println(foodFind);
 
-		System.out.println("Successful Run");
+			System.out.println("Successful Run");
+		} catch (Exception e) {
+			System.out.println("Something broke");
+		}
 	}
 
 }
