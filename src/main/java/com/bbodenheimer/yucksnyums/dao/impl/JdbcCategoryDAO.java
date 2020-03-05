@@ -30,7 +30,7 @@ public class JdbcCategoryDAO implements CategoryDAO{
 			ps.executeUpdate();
 			ps.close();
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new RuntimeException(e.getMessage());
 		} finally {
 			if (conn != null) {
 				try {
@@ -63,7 +63,7 @@ public class JdbcCategoryDAO implements CategoryDAO{
 
 			return allCategory;
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new RuntimeException(e.getMessage());
 		} finally {
 			if (conn != null) {
 				try {
@@ -96,7 +96,7 @@ public class JdbcCategoryDAO implements CategoryDAO{
 			
 			return category;
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new RuntimeException(e.getMessage());
 		} finally {
 			if (conn != null) {
 				try {

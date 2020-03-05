@@ -5,6 +5,10 @@ public class Food {
     String description;
     int category;
 
+    public Food() {
+        super();
+    }
+
     public Food(int id, String description, int category) {
         this.id = id;
         this.description = description;

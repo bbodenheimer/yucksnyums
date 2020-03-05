@@ -14,7 +14,7 @@ public class JdbcFoodDAO implements FoodDAO{
 
     public void setDataSource(DataSource dataSource) { this.dataSource = dataSource; }
 
-    public void insert(Food food) {
+    public void insert(Food food) throws SQLException {
         String sql = "INSERT INTO FOOD" +
                      " (description, category) VALUES (?, ?)";
         Connection conn = null;
@@ -27,7 +27,7 @@ public class JdbcFoodDAO implements FoodDAO{
             ps.executeUpdate();
             ps.close();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e.getMessage()) ;
         } finally {
             if (conn != null) {
                 try {
@@ -60,7 +60,7 @@ public class JdbcFoodDAO implements FoodDAO{
 
             return food;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e.getMessage());
         } finally {
             if (conn != null) {
                 try {

@@ -27,7 +27,7 @@ public class JdbcUserDAO implements UserDAO{
             ps.executeUpdate();
             ps.close();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e.getMessage());
         } finally {
             if (conn != null) {
                 try {
@@ -60,7 +60,7 @@ public class JdbcUserDAO implements UserDAO{
 
             return user;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e.getMessage());
         } finally {
             if (conn != null) {
                 try {
