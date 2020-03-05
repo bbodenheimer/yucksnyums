@@ -20,11 +20,11 @@ public class YucksnyumsApplication {
 		ApplicationContext context =
 	    		new ClassPathXmlApplicationContext("Spring-Module.xml");
 		try {
-			CategoryDAO categoryDAO = (CategoryDAO) context.getBean("categoryDAO");
-			List<Category> allCategories = categoryDAO.getAllCategories();
-
-			Category category = new Category("test");
-			categoryDAO.insert(category);
+//			CategoryDAO categoryDAO = (CategoryDAO) context.getBean("categoryDAO");
+//			List<Category> allCategories = categoryDAO.getAllCategories();
+//
+//			Category category = new Category("test");
+//			categoryDAO.insert(category);
 
 //		Category categoryFind = categoryDAO.findCategoryById(2);
 //		System.out.println(categoryFind);
@@ -38,7 +38,7 @@ public class YucksnyumsApplication {
 
 			System.out.println("Successful Run");
 		} catch (Exception e) {
-			System.out.println("Something broke");
+			System.out.println(e);
 		}
 	}
 

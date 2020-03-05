@@ -26,7 +26,7 @@ public class JdbcPrepDAO implements PrepDAO{
             ps.executeUpdate();
             ps.close();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e.getMessage());
         } finally {
             if (conn != null) {
                 try {
@@ -58,7 +58,7 @@ public class JdbcPrepDAO implements PrepDAO{
 
             return prep;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e.getMessage());
         } finally {
             if (conn != null) {
                 try {

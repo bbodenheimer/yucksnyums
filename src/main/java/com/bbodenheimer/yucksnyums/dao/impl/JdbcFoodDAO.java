@@ -27,7 +27,7 @@ public class JdbcFoodDAO implements FoodDAO{
             ps.executeUpdate();
             ps.close();
         } catch (SQLException e) {
-            throw e;
+            throw new RuntimeException(e.getMessage()) ;
         } finally {
             if (conn != null) {
                 try {
@@ -60,7 +60,7 @@ public class JdbcFoodDAO implements FoodDAO{
 
             return food;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e.getMessage());
         } finally {
             if (conn != null) {
                 try {

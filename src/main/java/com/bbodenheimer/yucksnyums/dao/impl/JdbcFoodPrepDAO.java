@@ -27,7 +27,7 @@ public class JdbcFoodPrepDAO {
             ps.executeUpdate();
             ps.close();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e.getMessage());
         } finally {
             if (conn != null) {
                 try {
@@ -59,7 +59,7 @@ public class JdbcFoodPrepDAO {
 
             return foodPrep;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e.getMessage());
         } finally {
             if (conn != null) {
                 try {

@@ -27,7 +27,7 @@ public class JdbcUserFoodPrepDAO implements UserFoodPrepDAO{
             ps.executeUpdate();
             ps.close();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e.getMessage());
         } finally {
             if (conn != null) {
                 try {
@@ -60,7 +60,7 @@ public class JdbcUserFoodPrepDAO implements UserFoodPrepDAO{
 
             return userFoodPrep;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e.getMessage());
         } finally {
             if (conn != null) {
                 try {
