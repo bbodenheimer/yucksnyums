@@ -10,6 +10,8 @@ import javax.sql.DataSource;
 import com.bbodenheimer.yucksnyums.dao.CategoryDAO;
 import com.bbodenheimer.yucksnyums.model.Category;
 
+//TODO: This all needs to be updated to handle ID
+
 public class JdbcCategoryDAO implements CategoryDAO{
 
 	private DataSource dataSource;
@@ -53,7 +55,8 @@ public class JdbcCategoryDAO implements CategoryDAO{
 			while (rs.next()) {
 				Category category = new Category(
 					rs.getInt("id"),
-					rs.getString("description")
+					rs.getString("description"),
+					rs.getString("icon")
 				);
 
 				allCategory.add(category);
@@ -88,7 +91,8 @@ public class JdbcCategoryDAO implements CategoryDAO{
 			if (rs.next()) {
 				category = new Category(
 					rs.getInt("id"),
-					rs.getString("description")
+					rs.getString("description"),
+					rs.getString("icon")
 				);
 			}
 			rs.close();

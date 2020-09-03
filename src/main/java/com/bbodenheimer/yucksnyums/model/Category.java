@@ -4,10 +4,12 @@ public class Category {
 	
 	int id;
 	String description;
+	String icon;
 	
-	public Category(int id, String description) {
+	public Category(int id, String description, String icon) {
 		this.id = id;
 		this.description = description;
+		this.icon = icon;
 	}
 
 	public Category(String description) {
@@ -26,10 +28,16 @@ public class Category {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	public String getIcon() {
+		return icon;
+	}
+	public void setIcon(String icon) {
+		this.icon = icon;
+	}
 
 	@Override
 	public String toString() {
-		return "Category [id=" + id + ", description=" + description
+		return "Category [id=" + id + ", description=" + description + ", icon=" + icon
 				+ "]";
 	}
 }

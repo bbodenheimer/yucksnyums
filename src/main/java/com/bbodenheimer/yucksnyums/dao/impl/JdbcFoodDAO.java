@@ -4,8 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.sql.DataSource;
 import com.bbodenheimer.yucksnyums.dao.FoodDAO;
+import com.bbodenheimer.yucksnyums.model.Category;
 import com.bbodenheimer.yucksnyums.model.Food;
 
 public class JdbcFoodDAO implements FoodDAO{
@@ -59,6 +62,40 @@ public class JdbcFoodDAO implements FoodDAO{
             ps.close();
 
             return food;
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getMessage());
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {}
+            }
+        }
+    }
+
+    public List<Food> findFoodByCategory(int id) {
+        String sql = "SELECT * FROM FOOD WHERE CATEGORY = ?";
+
+        Connection conn = null;
+
+        try {
+            conn = dataSource.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            List<Food> allFood = new ArrayList<Food>();
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Food food = new Food (
+                        rs.getInt("id"),
+                        rs.getString("description"),
+                        rs.getInt("category")
+                );
+                allFood.add(food);
+            }
+            rs.close();
+            ps.close();
+
+            return allFood;
         } catch (SQLException e) {
             throw new RuntimeException(e.getMessage());
         } finally {
